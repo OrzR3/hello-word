@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>静态百分百圆形进度条</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			body {
+				background-color: black;
+			}
+			
+			#bgDiv {
+				position: absolute;
+				width: 1280px;
+				height: 720px;
+				overflow: hidden;
+				background: url(images/index/bg.jpg) no-repeat;
+			}
+			/*支持IE9及以上*/
+			
+			.circle-bar {
+				font-size: 200px;
+				width: 1em;
+				height: 1em;
+				position: relative;
+				background-color: #333;
+			}
+			
+			.circle-bar-left,
+			.circle-bar-right {
+				width: 1em;
+				height: 1em;
+				background-color: #eee;
+			}
+			/*
+        这里采用clip剪切了圆，实现左右两个半圆，右半圆在后面，因此在更上一层，
+        clip的用法参考：http://www.w3school.com.cn/cssref/pr_pos_clip.asp
+     */
+			
+			.circle-bar-right {
+				clip: rect(0, auto, auto, .5em);
+			}
+			
+			.circle-bar-left {
+				clip: rect(0, .5em, auto, 0);
+			}
+			
+			.mask {
+				width: 0.8em;
+				height: 0.8em;
+				background-color: #fff;
+				text-align: center;
+				line-height: 0.2em;
+				color: rgba(0, 0, 0, 0.5);
+			}
+			
+			.mask :first-child {
+				font-size: 0.3em;
+				height: 0.8em;
+				line-height: 0.8em;
+				display: block;
+			}
+			/*所有的后代都水平垂直居中，这样就是同心圆了*/
+			
+			.circle-bar * {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				margin: auto;
+			}
+			/*自身以及子元素都是圆*/
+			
+			.circle-bar,
+			.circle-bar>* {
+				border-radius: 50%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="circle-bar">
+			<div class="circle-bar-left"></div>
+			<div class="circle-bar-right"></div>
+			<!-- 遮罩层，显示百分比 -->
+			<div class="mask">
+				<span class="percent"></span>
+			</div>
+		</div>
+
+	</body>
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/circleChart.min.js"></script>
+	<script type="text/javascript" src="js/webview.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/mylib.js"></script>
+	<script type="text/javascript" src="js/MSClass.js"></script>
+	<script type="text/javascript" src="js/sha1.js"></script>
+	<script>
+		var focus_manage = {};
+		var parea = mylib.get_request_params("area");
+		var index = mylib.get_request_params("index");
+		var type = mylib.get_request_params("type"); //1:调试
+		var exitStr = mylib.get_request_params("exitStr");
+		var aId = mylib.get_request_params("activityId");
+		common.isNull(parea) ? parea = "btn" : parea = parea;
+		common.isNull(index) ? index = 2 : index = parseInt(index);
+		common.isNull(aId) ? aId = 35 : aId = parseInt(aId);
+		var c_name_index = "answer_circle";
+		var type = mylib.get_request_params("type");
+		common.isNull(type) ? type = 0 : type = parseInt(type);
+		if(type == 1) {
+			mylib.user_id = "073108478526A@tv";
+			mylib.token = "DHSnXw9e7i_seEXt1ODiQ_M135392310";
+			mylib.app_version = "YYS.5.0.0.Y28.0.HNLT.0.0_Pre_Release";
+			mylib.device_mac = "cc-79-cf-01-5e-2e";
+			mylib.token = "ZgOOgo5MjkyOTIdLS5mZBTuqS7R8BXxLtKoNhwUFSwYFO3sOdgZ2h6oGDg4OtLQ7qiC0jkyOTI5MZgOOgg%3D%3D";
+		}
+			var percent = 60;
+			var baseColor = $('.circle-bar').css('background-color');
+		$(function() {
+			common.addExitUrl(exitStr, c_name_index);
+			focus_manage.area = parea;
+			focus_manage.idx = index;
+			mylib.bind_key(focus_manage);
+			btn.init();
+			circle();
+
+//			var percent = parseInt($('.mask :first-child').text());
+			circle();
+		});
+
+		function circle() {
+			if(percent <= 50) {
+				$('.circle-bar-right').css('transform', 'rotate(' + (percent * 3.6) + 'deg)');
+			} else {
+				$('.circle-bar-right').css({
+					'transform': 'rotate(0deg)',
+					'background-color': baseColor
+				});
+				$('.circle-bar-left').css('transform', 'rotate(' + ((percent - 50) * 3.6) + 'deg)');
+			}
+		}
+		/* 圆形时间进度条-倒计时 */
+		var btn = {
+			init: function() {
+				focus_manage.btn = function(key_code) {
+					btn.key_(key_code);
+				};
+				btn.isFocus();
+			},
+			key_: function(key_code) {
+				switch(key_code) {
+					case mylib.KEY_UP:
+						break;
+					case mylib.KEY_DOWN:
+						break;
+					case mylib.KEY_RIGHT:
+						break;
+					case mylib.KEY_LEFT:
+						break;
+					case mylib.KEY_SELECT:
+						break;
+					case mylib.KEY_PAGEDOWN:
+						break;
+					case mylib.KEY_PAGEUP:
+						break;
+					case mylib.KEY_BACK:
+					case 27: //TODO  
+					case 8:
+						pageBack();
+						break;
+				}
+			},
+			setFocus: function() {},
+			lastFocus: function() {},
+			isFocus: function() { //判断按钮状态
+				btn.setFocus();
+				//mylib.KEY_MOVE = true;
+			},
+			exit_url: function() {
+				var exit_ = window.location.href.split("?")[0] + "?area=" + focus_manage.area +
+					"&index=" + focus_manage.idx + "&activityId=" + aId;
+				return escape(exit_);
+			}
+		}
+		/*按确定*/
+		function keyEnter() {
+			showCount();
+		}
+
+		function jumpWeb(url_) {
+			window.location.href = url_;
+		}
+		//返回
+		function pageBack() {
+			common.goback(c_name_index);
+		}
+	</script>
+
+</html>

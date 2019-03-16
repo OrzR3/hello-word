@@ -1,0 +1,264 @@
+﻿/*样式初始化begin*/
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+legend,
+button,
+input,
+textarea,
+th,
+td {
+    margin: 0;
+    padding: 0;
+}
+body,
+button,
+input,
+select,
+textarea {
+    font-size: 12px;
+    color: #ffffff;
+}
+small {
+    font-size: 12px;
+}
+ul,
+ol {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+    display: block;
+    color: white;
+}
+sup {
+    vertical-align: text-top;
+}
+sub {
+    vertical-align: text-bottom;
+}
+img {
+    border: none;
+    display: block;
+}
+button,
+input,
+select,
+textarea {
+    font-size: 100%;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+ul,
+li {
+    list-style: none;
+}
+/*样式初始化end*/
+body {
+	position: absolute;
+    width: 1280px;
+    height: 720px;
+}
+/*获取文字宽度*/
+#ruler { 
+visibility: hidden;
+white-space: nowrap; 
+} 
+
+/*抖动特效*/
+@-webkit-keyframes up_s {
+  0% {
+    -webkit-transform:translate(0px, 0px) scale(1.1);
+  	-ms-transform: translate(0px, 0px) scale(1.1);
+  	-moz-transform:translate(0px, 0px) scale(1.1);
+  	-o-transform:translate(0px, 0px) scale(1.1);
+  }
+  50%{
+  	-webkit-transform:  translate(0px, -10px) scale(1.1);
+  	-ms-transform: translate(0px, -10px) scale(1.1);
+  	-moz-transform:translate(0px, -10px) scale(1.1);
+  	-o-transform:translate(0px, -10px) scale(1.1);
+  }
+  100% {
+     -webkit-transform:translate(0px, 0px) scale(1.1);
+  	-ms-transform: translate(0px, 0px) scale(1.1);
+  	-moz-transform:translate(0px, 0px) scale(1.1);
+  	-o-transform:translate(0px, 0px) scale(1.1);
+  }
+ }
+ @-webkit-keyframes left_s{
+  0% {
+     -webkit-transform:translate(0px, 0px) scale(1.1);
+  	 -ms-transform: translate(0px, 0px) scale(1.1);
+  	 -moz-transform:translate(0px, 0px) scale(1.1);
+  	 -o-transform:translate(0px, 0px) scale(1.1);
+  }
+  50%{
+  	 -webkit-transform:translate(-10px, 0px) scale(1.1);
+  	-ms-transform: translate(-10px, 0px) scale(1.1);
+  	-moz-transform:translate(-10px, 0px) scale(1.1);
+  	-o-transform:translate(-10px, 0px) scale(1.1);
+  }
+  100% {
+     -webkit-transform:translate(0px, 0px) scale(1.1);
+  	 -ms-transform: translate(0px, 0px) scale(1.1);
+  	-moz-transform:translate(0px, 0px) scale(1.1);
+  	-o-transform:translate(0px, 0px) scale(1.1);
+  }
+ }
+ /*放大105%*/
+  @-webkit-keyframes left_s_105{
+  0% {
+     -webkit-transform:translate(0px, 0px) scale(1.05);
+  	 -ms-transform: translate(0px, 0px) scale(1.05);
+  	 -moz-transform:translate(0px, 0px) scale(1.05);
+  	 -o-transform:translate(0px, 0px) scale(1.05);
+  }
+  50%{
+  	 -webkit-transform:translate(-10px, 0px) scale(1.05);
+  	-ms-transform: translate(-10px, 0px) scale(1.05);
+  	-moz-transform:translate(-10px, 0px) scale(1.05);
+  	-o-transform:translate(-10px, 0px) scale(1.05);
+  }
+  100% {
+     -webkit-transform:translate(0px, 0px)  scale(1.05);
+  	 -ms-transform: translate(0px, 0px)  scale(1.05);
+  	-moz-transform:translate(0px, 0px)  scale(1.05);
+  	-o-transform:translate(0px, 0px)  scale(1.05);
+  }
+ }
+ 
+ /*不放大*/
+  @-webkit-keyframes left_s_no{
+  0% {
+     -webkit-transform:translate(0px, 0px) ;
+  	 -ms-transform: translate(0px, 0px) ;
+  	 -moz-transform:translate(0px, 0px) ;
+  	 -o-transform:translate(0px, 0px) ;
+  }
+  50%{
+  	 -webkit-transform:translate(-10px, 0px);
+  	-ms-transform: translate(-10px, 0px);
+  	-moz-transform:translate(-10px, 0px);
+  	-o-transform:translate(-10px, 0px);
+  }
+  100% {
+     -webkit-transform:translate(0px, 0px);
+  	 -ms-transform: translate(0px, 0px);
+  	-moz-transform:translate(0px, 0px);
+  	-o-transform:translate(0px, 0px);
+  }
+ }
+/*左右*/
+ .shake_left{
+    -webkit-animation-name: left_s;
+    -webkit-animation-duration: 0.3s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: 2;
+   	-ms-animation-name: left_s;
+    -ms-animation-duration: 0.3s;
+   -ms-animation-timing-function: linear;
+    -ms-animation-iteration-count: 2;
+   	-moz-animation-name: left_s;
+    -moz-animation-duration: 0.3s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: 2;
+    -o-animation-name: left_s;
+    -o-animation-duration: 0.3s;
+    -o-animation-timing-function: linear;
+    -o-animation-iteration-count: 2;
+    /*-ms-transform:scale(1.1),
+	-moz-transform:scale(1.1),
+	-o-transform:scale(1.1),
+	-webkit-transform":"scale(1.1),
+	transform:scale(1.1)*/
+   }
+   
+   .shake_left_105{
+    -webkit-animation-name: left_s_105;
+    -webkit-animation-duration: 0.3s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: 2;
+   	-ms-animation-name: left_s;
+    -ms-animation-duration: 0.3s;
+   -ms-animation-timing-function: linear;
+    -ms-animation-iteration-count: 2;
+   	-moz-animation-name: left_s;
+    -moz-animation-duration: 0.3s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: 2;
+    -o-animation-name: left_s;
+    -o-animation-duration: 0.3s;
+    -o-animation-timing-function: linear;
+    -o-animation-iteration-count: 2;
+    /*-ms-transform:scale(1.1),
+	-moz-transform:scale(1.1),
+	-o-transform:scale(1.1),
+	-webkit-transform":"scale(1.1),
+	transform:scale(1.1)*/
+   }
+ .shake_left_no{
+    -webkit-animation-name: left_s_no;
+    -webkit-animation-duration: 0.3s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: 2;
+   	-ms-animation-name: left_s;
+    -ms-animation-duration: 0.3s;
+   -ms-animation-timing-function: linear;
+    -ms-animation-iteration-count: 2;
+   	-moz-animation-name: left_s;
+    -moz-animation-duration: 0.3s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: 2;
+    -o-animation-name: left_s;
+    -o-animation-duration: 0.3s;
+    -o-animation-timing-function: linear;
+    -o-animation-iteration-count: 2;
+   }  
+ 
+ .shake_up{
+    -webkit-animation-name: up_s;
+    -webkit-animation-duration: 0.3s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: 2;
+   	-ms-animation-name: up_s;
+    -ms-animation-duration: 0.3s;
+   -ms-animation-timing-function: linear;
+    -ms-animation-iteration-count: 2;
+   	-moz-animation-name: up_s;
+    -moz-animation-duration: 0.3s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: 2;
+    -o-animation-name: up_s;
+    -o-animation-duration: 0.3s;
+    -o-animation-timing-function: linear;
+    -o-animation-iteration-count: 2;
+   }
+/*返回首页提示*/
+#return-home{
+	position: absolute;
+	width: 1280px;
+    height: 720px; 
+    background: url(../images/return-home.png);	
+    opacity:0;
+    filter:Alpha(opacity=0); /* IE8 以及更早的浏览器 */
+   z-index: 99999;
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>空模板</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			body {
+				background-color: black;
+			}
+			
+			#bgDiv {
+				position: absolute;
+				width: 1280px;
+				height: 720px;
+				overflow: hidden;
+				background: url(images/index/bg.jpg) no-repeat;
+			}
+			
+			div{
+				position: absolute;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="bgDiv">
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/circleChart.min.js"></script>
+	<script type="text/javascript" src="js/webview.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/mylib.js"></script>
+	<script type="text/javascript" src="js/MSClass.js"></script>
+	<script type="text/javascript" src="js/sha1.js"></script>
+	<script>
+		var focus_manage = {};
+		var parea = mylib.get_request_params("area");
+		var index = mylib.get_request_params("index");
+		var type = mylib.get_request_params("type"); //1:调试
+		var exitStr = mylib.get_request_params("exitStr");
+		var aId = mylib.get_request_params("activityId");
+		common.isNull(parea) ? parea = "btn" : parea = parea;
+		common.isNull(index) ? index = 2 : index = parseInt(index);
+		common.isNull(aId) ? aId = 35 : aId = parseInt(aId);
+		var c_name_index = "answer_circle";
+		var type = mylib.get_request_params("type");
+		common.isNull(type) ? type = 0 : type = parseInt(type);
+		$(function() {
+//			common.addExitUrl(exitStr, c_name_index);
+			focus_manage.area = parea;
+			focus_manage.idx = index;
+			mylib.bind_key(focus_manage);
+			btn.init();
+		});
+
+		var btn = {
+			init: function() {
+				focus_manage.btn = function(key_code) {
+					btn.key_(key_code);
+				};
+				btn.isFocus();
+			},
+			key_: function(key_code) {
+				switch(key_code) {
+					case mylib.KEY_UP:
+						break;
+					case mylib.KEY_DOWN:
+						break;
+					case mylib.KEY_RIGHT:
+						break;
+					case mylib.KEY_LEFT:
+						break;
+					case mylib.KEY_SELECT:
+						break;
+					case mylib.KEY_PAGEDOWN:
+						break;
+					case mylib.KEY_PAGEUP:
+						break;
+					case mylib.KEY_BACK:
+					case 27: //TODO  
+					case 8:
+						pageBack();
+						break;
+				}
+			},
+			setFocus: function() {},
+			lastFocus: function() {},
+			isFocus: function() { //判断按钮状态
+				btn.setFocus();
+				//mylib.KEY_MOVE = true;
+			},
+			exit_url: function() {
+				var exit_ = window.location.href.split("?")[0] + "?area=" + focus_manage.area +
+					"&index=" + focus_manage.idx + "&activityId=" + aId;
+				return escape(exit_);
+			}
+		}
+		/*按确定*/
+		function keyEnter() {}
+
+		function jumpWeb(url_) {
+			window.location.href = url_;
+		}
+		//返回
+		function pageBack() {
+			common.goback(c_name_index);
+		}
+	</script>
+
+</html>

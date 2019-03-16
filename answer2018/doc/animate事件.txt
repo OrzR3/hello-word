@@ -1,0 +1,29 @@
+-webkit-animation动画有三个事件：
+
+开始事件: webkitAnimationStart
+结束事件:  webkitAnimationEnd
+重复运动事件: webkitAnimationIteration
+
+jQuery事件监听
+$(".pie1").on("animationend webkitAnimationEnd", function() {
+	$(".pie1").css({
+		"-webkit-transform": "rotate(180deg)",
+		"-ms-transform": "rotate(180deg)",
+		"-moz-transform": "rotate(180deg)",
+		"-o-transform": "rotate(180deg)"
+	});
+})
+
+
+// 动画开始时事件
+o.addEventListener("webkitAnimationStart", function() {
+    console.log("动画开始");
+})
+// 动画重复运动时事件
+o.addEventListener("webkitAnimationIteration", function() {
+    console.log("动画重复运动");
+})
+// 动画结束时事件
+o.addEventListener("webkitAnimationEnd", function() {
+    console.log("动画结束");
+})

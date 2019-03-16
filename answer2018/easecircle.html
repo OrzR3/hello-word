@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>百分百圆形进度条</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			body {
+				background-color: black;
+			}
+			
+			#bgDiv {
+				position: absolute;
+				width: 1280px;
+				height: 720px;
+				overflow: hidden;
+				background: url(images/index/bg.jpg) no-repeat;
+			}
+			
+			.pie {
+				width: 400px;
+				height: 400px;
+				/*这个表示进度条的颜色*/
+				background-color: #0252db;
+				border-radius: 200px;
+				position: absolute;
+			}
+			
+			.pie1 {
+				/*rect (top, right, bottom, left)*/
+				clip: rect(0px, 400px, 400px, 200px);
+				-o-transform: rotate(0deg);
+				-moz-transform: rotate(0deg);
+				-webkit-transform: rotate(0deg);
+				/*background: -moz-radial-gradient(20% 50% 0deg, #333, #0000ff);
+				background: -webkit-gradient(radial, 100 100, 0, 100 100, 110, from(#000), to(#0000ff));*/
+			}
+			
+			.pie2 {
+				clip: rect(0px, 200px, 400px, 0px);
+				-o-transform: rotate(0deg);
+				-moz-transform: rotate(0deg);
+				-webkit-transform: rotate(0deg);
+				/*	background: -moz-radial-gradient(80% 50% 0deg, #333, #0000ff);
+				background: -webkit-gradient(radial, 100 100, 0, 100 100, 110, from(#000), to(#0000ff));*/
+			}
+			
+			.hold {
+				width: 400px;
+				height: 400px;
+				position: absolute;
+				z-index: 1;
+			}
+			
+			.hold1 {
+				clip: rect(0px, 400px, 400px, 200px);
+			}
+			
+			.hold2 {
+				clip: rect(0px, 200px, 400px, 0px);
+			}
+			
+			.bg {
+				width: 400px;
+				height: 400px;
+				/*这个background-color表示底色*/
+				background-color: #f15b6c;
+				border-radius: 200px;
+				position: absolute;
+				box-shadow: 0px 0px 8px #333;
+				/*background: -moz-radial-gradient(0% 50% 0deg, #900, #ff0000);
+				background: -webkit-gradient(radial, 100 100, 0, 100 100, 110, from(#900), to(#ff0000));*/
+			}
+			
+			.time {
+				width: 360px;
+				height: 360px;
+				margin: 20px 0 0 20px;
+				background-color: #fff;
+				border-radius: 200px;
+				position: absolute;
+				z-index: 1;
+				box-shadow: 0px 0px 8px #333 inset;
+				text-align: center;
+				line-height: 360px;
+				font-family: "Book Antiqua", Palatino, serif;
+				font-size: 35px;
+				font-weight: bold;
+				text-shadow: 1px 1px 3px #333;
+			}
+			/*.time em {
+				background: #fff;
+				position: absolute;
+				top: 62px;
+				left: 12px;
+				height: 18px;
+				width: 140px;
+				opacity: 0.4;
+			}*/
+			
+			.circle {
+				position: relative;
+				margin: 160px auto;
+				width: 400px;
+				height: 400px;
+			}
+			
+			@-webkit-keyframes right_circle {
+				from {
+					-webkit-transform: rotate(0deg);
+					-ms-transform: rotate(0deg);
+					-moz-transform: rotate(0deg);
+					-o-transform: rotate(0deg);
+				}
+				to {
+					-webkit-transform: rotate(180deg);
+					-ms-transform: rotate(180deg);
+					-moz-transform: rotate(180deg);
+					-o-transform: rotate(180deg);
+				}
+			}
+			
+			@-webkit-keyframes left_circle {
+				from {
+					-webkit-transform: rotate(0deg);
+					-ms-transform: rotate(0deg);
+					-moz-transform: rotate(0deg);
+					-o-transform: rotate(0deg);
+				}
+				to {
+					-webkit-transform: rotate(180deg);
+					-ms-transform: rotate(180deg);
+					-moz-transform: rotate(180deg);
+					-o-transform: rotate(180deg);
+				}
+			}
+			
+			.right_circle {
+				animation: right_circle 2.5s linear;
+				-webkit-animation: right_circle 2.5s linear;
+			}
+			
+			.left_circle {
+				animation: left_circle 2.5s linear;
+				-webkit-animation: left_circle 2.5s linear;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="bgDiv">
+			<div class="circle">
+				<div class="hold hold1">
+					<div class="pie pie1"></div>
+				</div>
+				<div class="hold hold2">
+					<div class="pie pie2"></div>
+				</div>
+				<div class="bg"> </div>
+				<div class="time"><span></span></div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/circleChart.min.js"></script>
+	<script type="text/javascript" src="js/webview.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/mylib.js"></script>
+	<script type="text/javascript" src="js/MSClass.js"></script>
+	<script type="text/javascript" src="js/sha1.js"></script>
+	<script>
+		var focus_manage = {};
+		var parea = mylib.get_request_params("area");
+		var index = mylib.get_request_params("index");
+		var type = mylib.get_request_params("type"); //1:调试
+		var exitStr = mylib.get_request_params("exitStr");
+		var aId = mylib.get_request_params("activityId");
+		common.isNull(parea) ? parea = "btn" : parea = parea;
+		common.isNull(index) ? index = 2 : index = parseInt(index);
+		common.isNull(aId) ? aId = 35 : aId = parseInt(aId);
+		var c_name_index = "answer_circle";
+		var type = mylib.get_request_params("type");
+		common.isNull(type) ? type = 0 : type = parseInt(type);
+		if(type == 1) {
+			mylib.user_id = "073108478526A@tv";
+			mylib.token = "DHSnXw9e7i_seEXt1ODiQ_M135392310";
+			mylib.app_version = "YYS.5.0.0.Y28.0.HNLT.0.0_Pre_Release";
+			mylib.device_mac = "cc-79-cf-01-5e-2e";
+			mylib.token = "ZgOOgo5MjkyOTIdLS5mZBTuqS7R8BXxLtKoNhwUFSwYFO3sOdgZ2h6oGDg4OtLQ7qiC0jkyOTI5MZgOOgg%3D%3D";
+		}
+		var i = 0;
+		var j = 0;
+		var count = 0;
+		/*var MM = 4;
+		var SS = 59;
+		var MS = 9;*/
+		var MM = 0;
+		var SS = 5;
+		var MS = 0;
+//		var totle = (MM + 1) * 600;
+		var totle = (SS + 1) * 10;
+		var d = 180 * (MM + 1);
+		MM = "0" + MM;
+		$(function() {
+			common.addExitUrl(exitStr, c_name_index);
+			focus_manage.area = parea;
+			focus_manage.idx = index;
+			mylib.bind_key(focus_manage);
+			btn.init();
+			/*圆形进度条方法*/
+			circle();
+		});
+		/*百分百圆形进度条*/
+		function circle() {
+			$(".pie1").css({
+				"-webkit-transform": "rotate(0deg)",
+				"-ms-transform": "rotate(0deg)",
+				"-moz-transform": "rotate(0deg)",
+				"-o-transform": "rotate(0deg)"
+			});
+			$(".pie2").css({
+				"-webkit-transform": "rotate(0deg)",
+				"-ms-transform": "rotate(0deg)",
+				"-moz-transform": "rotate(0deg)",
+				"-o-transform": "rotate(0deg)"
+			});
+			count = 0;
+			MM = 0;
+			SS = 5;
+			MS = 0;
+			totle = (SS + 1) *10;
+			d = 180 * (MM + 1);
+			MM = "0" + MM;
+			s = setInterval("showTime()", 100);
+			/*imp 先注释掉这个倒计时显示的方法*/
+			/*s = setInterval("showTime()", 100);
+			t1 = setInterval("start1()", 100);*/
+			/*上面是用定时器写的圆形进度条条，比较卡顿，下面改用web-kit动画*/
+			circleByWebkit();
+		}
+
+		function circleByWebkit() {
+			$(".pie1").addClass("right_circle");
+			$(".pie1").on("animationend webkitAnimationEnd", function() {
+				$(".pie1").css({
+					"-webkit-transform": "rotate(180deg)",
+					"-ms-transform": "rotate(180deg)",
+					"-moz-transform": "rotate(180deg)",
+					"-o-transform": "rotate(180deg)"
+				});
+				$(".pie1").removeClass("right_circle");
+				$(".pie2").addClass("left_circle");
+			})
+
+			$(".pie2").on("animationend webkitAnimationEnd", function() {
+				$(".pie2").css({
+					"-webkit-transform": "rotate(180deg)",
+					"-ms-transform": "rotate(180deg)",
+					"-moz-transform": "rotate(180deg)",
+					"-o-transform": "rotate(180deg)"
+				});
+				$(".pie2").removeClass("left_circle");
+			})
+		}
+
+		function showTime() {
+			common.log("totle : ",totle);
+			totle = totle - 1;
+			if(totle == 0) {
+				clearInterval(s);
+//				clearInterval(t1);
+//				clearInterval(t2);
+				/*$(".pie2").css("-o-transform", "rotate(" + d + "deg)");
+				$(".pie2").css("-moz-transform", "rotate(" + d + "deg)");
+				$(".pie2").css("-webkit-transform", "rotate(" + d + "deg)");*/
+			} else {
+				if(totle > 0 && MS > 0) {
+					MS = MS - 1;
+					if(MS < 10) {
+						MS = "0" + MS
+					};
+				};
+				if(MS == 0 && SS > 0) {
+					MS = 10;
+					SS = SS - 1;
+					if(SS < 10) {
+						SS = "0" + SS
+					};
+				};
+				if(SS == 0 && MM > 0) {
+					SS = 60;
+					MM = MM - 1;
+					if(MM < 10) {
+						MM = "0" + MM
+					};
+				};
+			};
+			$(".time span").html(MM + ":" + SS + ":" + MS);
+		};
+
+		function start1() {
+			i = i + 0.6;
+			count = count + 1;
+			if(count == 300) {
+				count = 0;
+				clearInterval(t1);
+				t2 = setInterval("start2()", 100);
+			};
+			$(".pie1").css("-o-transform", "rotate(" + i + "deg)");
+			$(".pie1").css("-moz-transform", "rotate(" + i + "deg)");
+			$(".pie1").css("-webkit-transform", "rotate(" + i + "deg)");
+		};
+
+		function start2() {
+			j = j + 0.6;
+			count = count + 1;
+			if(count == 300) {
+				count = 0;
+				clearInterval(t2);
+				t1 = setInterval("start1()", 100);
+			};
+			$(".pie2").css("-o-transform", "rotate(" + j + "deg)");
+			$(".pie2").css("-moz-transform", "rotate(" + j + "deg)");
+			$(".pie2").css("-webkit-transform", "rotate(" + j + "deg)");
+		};
+		var btn = {
+			init: function() {
+				focus_manage.btn = function(key_code) {
+					btn.key_(key_code);
+				};
+				btn.isFocus();
+			},
+			key_: function(key_code) {
+				switch(key_code) {
+					case mylib.KEY_UP:
+						break;
+					case mylib.KEY_DOWN:
+						break;
+					case mylib.KEY_RIGHT:
+						break;
+					case mylib.KEY_LEFT:
+						break;
+					case mylib.KEY_SELECT:
+						circle();
+						break;
+					case mylib.KEY_PAGEDOWN:
+						break;
+					case mylib.KEY_PAGEUP:
+						break;
+					case mylib.KEY_BACK:
+					case 27: //TODO  
+					case 8:
+						pageBack();
+						break;
+				}
+			},
+			setFocus: function() {},
+			lastFocus: function() {},
+			isFocus: function() { //判断按钮状态
+				btn.setFocus();
+				//mylib.KEY_MOVE = true;
+			},
+			exit_url: function() {
+				var exit_ = window.location.href.split("?")[0] + "?area=" + focus_manage.area +
+					"&index=" + focus_manage.idx + "&activityId=" + aId;
+				return escape(exit_);
+			}
+		}
+		/*按确定*/
+		function keyEnter() {}
+
+		function jumpWeb(url_) {
+			window.location.href = url_;
+		}
+		//返回
+		function pageBack() {
+			common.goback(c_name_index);
+		}
+	</script>
+
+</html>

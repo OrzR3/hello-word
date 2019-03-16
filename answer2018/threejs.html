@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>threejs</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			body {
+				background-color: black;
+			}
+			
+			#bgDiv {
+				position: absolute;
+				width: 1280px;
+				height: 720px;
+				overflow: hidden;
+				background: url(images/index/bg.jpg) no-repeat;
+			}
+			
+			#canvas-frame {
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				background: linear-gradient(#e4e0ba, #f7d9aa);
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="bgDiv">
+			<div id="canvas-frame"></div>
+
+			<!--圆形时间进度条-->
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/webview.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/mylib.js"></script>
+	<script type="text/javascript" src="js/MSClass.js"></script>
+	<script type="text/javascript" src="js/sha1.js"></script>
+	<script type="text/javascript" src="js/three.min.js"></script>
+	<script>
+		var focus_manage = {};
+		var parea = mylib.get_request_params("area");
+		var index = mylib.get_request_params("index");
+		var type = mylib.get_request_params("type"); //1:调试
+		var exitStr = mylib.get_request_params("exitStr");
+		var aId = mylib.get_request_params("activityId");
+		common.isNull(parea) ? parea = "btn" : parea = parea;
+		common.isNull(index) ? index = 2 : index = parseInt(index);
+		common.isNull(aId) ? aId = 35 : aId = parseInt(aId);
+		var c_name_index = "answer_index";
+		var type = mylib.get_request_params("type");
+		common.isNull(type) ? type = 0 : type = parseInt(type);
+		if(type == 1) {
+			mylib.user_id = "073108478526A@tv";
+			mylib.token = "DHSnXw9e7i_seEXt1ODiQ_M135392310";
+			mylib.app_version = "YYS.5.0.0.Y28.0.HNLT.0.0_Pre_Release";
+			mylib.device_mac = "cc-79-cf-01-5e-2e";
+			mylib.token = "ZgOOgo5MjkyOTIdLS5mZBTuqS7R8BXxLtKoNhwUFSwYFO3sOdgZ2h6oGDg4OtLQ7qiC0jkyOTI5MZgOOgg%3D%3D";
+		}
+		var timer = -1;
+		var count_num = 10;
+		$(function() {
+			common.addExitUrl(exitStr, c_name_index);
+			focus_manage.area = parea;
+			focus_manage.idx = index;
+			mylib.bind_key(focus_manage);
+			btn.init();
+			threeStart();
+		});
+		var btn = {
+			init: function() {
+				focus_manage.btn = function(key_code) {
+					btn.key_(key_code);
+				};
+				btn.isFocus();
+			},
+			key_: function(key_code) {
+				switch(key_code) {
+					case mylib.KEY_UP:
+						break;
+					case mylib.KEY_DOWN:
+						break;
+					case mylib.KEY_RIGHT:
+						break;
+					case mylib.KEY_LEFT:
+						break;
+					case mylib.KEY_SELECT:
+						clearTimeout(timer);
+						count_num = 10;
+						countNum();
+
+						$(".wrapper").show();
+						$('.right>.circleProgress').addClass("rightcircle");
+						$('.right>.circleProgress').on("animationend webkitAnimationEnd", function() {
+							$('.right>.circleProgress').removeClass("rightcircle");
+							$(".wrapper").hide();
+						})
+						$('.left>.circleProgress').addClass("leftcircle");
+						$('.left>.circleProgress').on("animationend webkitAnimationEnd", function() {
+							$('.left>.circleProgress').removeClass("leftcircle");
+							$(".wrapper").hide();
+						})
+
+						$('.circleProgress').on("animationend webkitAnimationEnd", function() {
+							$(".wrapper").hide();
+						})
+
+						break;
+					case mylib.KEY_PAGEDOWN:
+						break;
+					case mylib.KEY_PAGEUP:
+						break;
+					case mylib.KEY_BACK:
+					case 27: //TODO  
+					case 8:
+						pageBack();
+						break;
+				}
+			},
+			setFocus: function() {},
+			lastFocus: function() {},
+			isFocus: function() { //判断按钮状态
+				btn.setFocus();
+				//mylib.KEY_MOVE = true;
+			},
+			exit_url: function() {
+				var exit_ = window.location.href.split("?")[0] + "?area=" + focus_manage.area +
+					"&index=" + focus_manage.idx + "&activityId=" + aId;
+				return escape(exit_);
+			}
+		}
+			var renderer;
+			function initThree(){
+				alert("initthree");
+				
+				renderer = new THREE.WebGLRenderer({
+					antialias:true
+				});
+				alert(renderer);
+				width = document.getElementById("canvas-frame").clientWidth;
+				height = document.getElementById("canvas-frame").clientHeight;
+				
+				renderer.setSize(width,height);
+				document.getElementById("canvas-frame").appendChild(renderer.domElement);
+				renderer.setClearColor(0xFFFFFF,1.0);
+			}
+			
+			var camera;
+			function initCamera(){
+				camera = new THREE.PerspectiveCamera(45,width/height,1,10000);
+				camera.position.x = 0;
+				camera.position.y = 1000;
+				camera.position.z = 0;
+				camera.up.x = 0;
+				camera.up.y = 0;
+				camera.up.z = 1;
+				camera.lookAt({
+					x:0,
+					y:0,
+					z:0
+				});
+			}
+			
+			var scene;
+			function initScene(){
+				scene = new THREE.Scene();
+			}
+			
+			var light;
+			function initLight(){
+				light = new THREE.DirectionalLight(0xff0000,1.0,0);
+				light.position.set(100,100,200);
+				scene.add(light);
+			}
+			
+			var cube;
+			function initObject(){
+				/*在之前搭建的Three框架上，只需要在这个方法了，改代码，做划线的练习*/
+				var geometry = new THREE.Geometry();
+				var material = new THREE.LineBasicMaterial({
+					//vertexColor:THREE.VertexColors
+					vertexColors:true
+				});
+				var color1 = new THREE.Color(0x444444),color2 = new THREE.Color(0xff0000);
+				 // 线的材质可以由2点的颜色决定
+				var p1 = new THREE.Vector3(-100,0,100);
+				var p2 = new THREE.Vector3(100,0,-100);
+				geometry.vertices.push(p1);
+				geometry.vertices.push(p2);
+				geometry.colors.push(color1,color2);
+				
+				//var line = new THREE.Line(geometry,material,THREE.LinePieces);
+				for(var i=0;i<20;i++){
+					var line = new THREE.Line(geometry,material,THREE.LinePieces);
+					 line.position.z = ( i * 50 ) - 500;
+					scene.add(line);
+					
+					var line = new THREE.Line(geometry,material,THREE.LinePieces);
+					 line.position.x = ( i * 50 ) - 500;
+					 line.rotation.y = 90 * Math.PI / 180;
+					scene.add(line);
+					
+					
+				}
+				//scene.add(line);
+			}
+			
+			function render(){
+				renderer.clear();
+				renderer.render(scene,camera);
+				requestAnimationFrame(render);
+			}
+			
+			function threeStart(){
+				initThree();
+				initCamera();
+				initScene();
+				initLight();
+				initObject();
+				render();
+			}
+
+		function jumpWeb(url_) {
+			window.location.href = url_;
+		}
+		//返回
+		function pageBack() {
+			common.goback(c_name_index);
+		}
+	</script>
+
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>animation动画库</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" href="css/animate.min.css">
+		<style>
+			body {
+				background-color: black;
+			}
+			
+			#bgDiv {
+				position: absolute;
+				width: 1280px;
+				height: 720px;
+				/*overflow: hidden;*/
+				background: url(images/index/bg.jpg);
+			}
+			
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			ul {
+				list-style-type: none;
+			}
+			
+			body {
+				font: 14px "Microsoft Yahei";
+				overflow-x: hidden;
+			}
+			
+			h1 {
+				width: 900px;
+				margin: 40px auto 100px;
+				font: 32px "Microsoft Yahei";
+				text-align: center;
+			}
+			
+			h2 {
+				font: 96px "Microsoft Yahei";
+				font-weight: 500;
+				text-align: center;
+				color: #f326c5;
+			}
+			
+			.wrap p {
+				margin-bottom: 100px;
+				font: 30px "Microsoft Yahei";
+				text-align: center;
+				color: #999;
+			}
+			
+			.list {
+				width: 1000px;
+				margin: 0 auto;
+			}
+			
+			dl {
+				width: 1000px;
+				margin: 10px auto;
+				overflow: hidden;
+			}
+			
+			dt {
+				float: left;
+				width: 1000px;
+				padding: 5px 0;
+				border-bottom: 1px solid #ddd;
+				font-weight: 700;
+			}
+			
+			dd {
+				float: left;
+				margin: 10px 10px 0 0;
+				padding: 5px 10px;
+				background-color: #eee;
+				cursor: pointer;
+			}
+			
+			.jq22-explain {
+				display: none;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				font-size: 14px;
+				text-align: center;
+				color: #f50;
+			}
+			
+			.tab {
+				width: 900px;
+				margin: 0 auto;
+				border: 1px solid #ddd;
+			}
+			
+			.tabNav {
+				padding-bottom: 10px;
+				overflow: hidden;
+				zoom: 1;
+				background-color: #f5f5f5;
+			}
+			
+			.tabNav li {
+				float: left;
+				margin: 10px 0 0 10px;
+				display: inline;
+			}
+			
+			.tabNav a {
+				float: left;
+				padding: 5px 10px;
+				color: #444;
+				text-decoration: none;
+			}
+			
+			.tabNav .curActive a {
+				color: #fff;
+				background-color: #0252DB;
+			}
+			
+			.tabNav .active a {
+				color: #fff;
+				background-color: #f326c5;
+			}
+			
+			.tabPane {
+				display: none;
+				overflow: hidden;
+				zoom: 1;
+			}
+			
+			.tabCnt .active {
+				display: block;
+			}
+			
+			.tabCnt {
+				padding: 10px 20px 20px;
+			}
+			
+			.tabPane li {
+				color: #0252DB;
+				float: left;
+				margin: 10px 10px 0 0;
+				padding: 5px 10px;
+				background-color: #eee;
+				cursor: pointer;
+			}
+			
+			.tabPane .active {
+				color: #f326c5;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="bgDiv">
+			<h1>Animate.css动画演示</h1>
+			<div class="wrap">
+				<h2 id="animate">Animate.css</h2>
+				<p>V3.5.2——CSS3动画库</p>
+			</div>
+
+			<p class="jq22-explain">您的浏览器不支持 CSS3 animate 属性，所以您看不到任何效果，请使用 Firefox、Chrome 或 IE10</p>
+			<div class="tab">
+				<ul class="tabNav">
+					<li class="curActive" id="list_0">
+						<a href="http://www.jq22.com/">Attention Seekers</a>
+					</li>
+					<li id="list_1">
+						<a href="###">Bouncing Entrances</a>
+					</li>
+					<li id="list_2">
+						<a href="###">Bouncing Exits</a>
+					</li>
+					<li id="list_3">
+						<a href="###">Fading Entrances</a>
+					</li>
+					<li id="list_4">
+						<a href="###">Fading Exits</a>
+					</li>
+					<li id="list_5">
+						<a href="###">Flippers</a>
+					</li>
+					<li id="list_6">
+						<a href="###">Lightspeed</a>
+					</li>
+					<li id="list_7">
+						<a href="###">Rotating Entrances</a>
+					</li>
+					<li id="list_8">
+						<a href="###">Rotating Exits</a>
+					</li>
+					<li id="list_9">
+						<a href="###">Sliders</a>
+					</li>
+					<li id="list_10">
+						<a href="###">Specials</a>
+					</li>
+				</ul>
+
+				<div class="tabCnt">
+					<h3>点击这里查看效果</h3>
+					<ul class="tabPane active">
+						<li id="list_0_0">bounce</li>
+						<li id="list_0_1">flash</li>
+						<li id="list_0_2">pulse</li>
+						<li id="list_0_3">rubberBand</li>
+						<li id="list_0_4">shake</li>
+						<li id="list_0_5">swing</li>
+						<li id="list_0_6">tada</li>
+						<li id="list_0_7">wobble</li>
+					</ul>
+
+					<ul class="tabPane">
+						<li id="list_1_0">bounceIn</li>
+						<li id="list_1_1">bounceInDown</li>
+						<li id="list_1_2">bounceInLeft</li>
+						<li id="list_1_3">bounceInRight</li>
+						<li id="list_1_4">bounceInUp</li>
+					</ul>
+
+					<ul class="tabPane">
+						<li id="list_2_0">bounceOut</li>
+						<li id="list_2_1">bounceOutDown</li>
+						<li id="list_2_2">bounceOutLeft</li>
+						<li id="list_2_3">bounceOutRight</li>
+						<li id="list_2_4">bounceOutUp</li>
+					</ul>
+
+					<ul class="tabPane">
+						<li id="list_3_0">fadeIn</li>
+						<li id="list_3_1">fadeInDown</li>
+						<li id="list_3_2">fadeInDownBig</li>
+						<li id="list_3_3">fadeInLeft</li>
+						<li id="list_3_4">fadeInLeftBig</li>
+						<li id="list_3_5">fadeInRight</li>
+						<li id="list_3_6">fadeInRightBig</li>
+						<li id="list_3_7">fadeInUp</li>
+						<li id="list_3_8">fadeInUpBig</li>
+					</ul>
+
+					<ul class="tabPane">
+						<li id="list_4_0">fadeOut</li>
+						<li id="list_4_1">fadeOutDown</li>
+						<li id="list_4_2">fadeOutDownBig</li>
+						<li id="list_4_3">fadeOutLeft</li>
+						<li id="list_4_4">fadeOutLeftBig</li>
+						<li id="list_4_5">fadeOutRight</li>
+						<li id="list_4_6">fadeOutRightBig</li>
+						<li id="list_4_7">fadeOutUp</li>
+						<li id="list_4_8">fadeOutUpBig</li>
+					</ul>
+
+					<ul class="tabPane">
+						<li id="list_5_0">flip</li>
+						<li id="list_5_1">flipInX</li>
+						<li id="list_5_2">flipInY</li>
+						<li id="list_5_3">flipOutX</li>
+						<li id="list_5_4">flipOutY</li>
+					</ul>
+
+					<ul class="tabPane">
+						<li id="list_6_0">lightSpeedIn</li>
+						<li id="list_6_1">lightSpeedOut</li>
+					</ul>
+
+					<ul class="tabPane">
+						<li id="list_7_0">rotateIn</li>
+						<li id="list_7_1">rotateInDownLeft</li>
+						<li id="list_7_2">rotateInDownRight</li>
+						<li id="list_7_3">rotateInUpLeft</li>
+						<li id="list_7_4">rotateInUpRight</li>
+					</ul>
+
+					<h3></h3>
+					<ul class="tabPane">
+						<li id="list_8_0">rotateOut</li>
+						<li id="list_8_1">rotateOutDownLeft</li>
+						<li id="list_8_2">rotateOutDownRight</li>
+						<li id="list_8_3">rotateOutUpLeft</li>
+						<li id="list_8_4">rotateOutUpRight</li>
+					</ul>
+
+					<ul class="tabPane">
+						<li id="list_9_0">slideInDown</li>
+						<li id="list_9_1">slideInLeft</li>
+						<li id="list_9_2">slideInRight</li>
+						<li id="list_9_3">slideOutLeft</li>
+						<li id="list_9_4">slideOutRight</li>
+						<li id="list_9_5">slideOutUp</li>
+					</ul>
+
+					<ul class="tabPane">
+						<li id="list_10_0">hinge</li>
+						<li id="list_10_1">rollIn</li>
+						<li id="list_10_2">rollOut</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/circleChart.min.js"></script>
+	<script type="text/javascript" src="js/webview.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/mylib.js"></script>
+	<script type="text/javascript" src="js/MSClass.js"></script>
+	<script type="text/javascript" src="js/sha1.js"></script>
+	<script>
+		var focus_manage = {};
+		var parea = mylib.get_request_params("area");
+		var index = mylib.get_request_params("index");
+		var type = mylib.get_request_params("type"); //1:调试
+		var exitStr = mylib.get_request_params("exitStr");
+		var aId = mylib.get_request_params("activityId");
+		common.isNull(parea) ? parea = "btn" : parea = parea;
+		common.isNull(index) ? index = 2 : index = parseInt(index);
+		common.isNull(aId) ? aId = 35 : aId = parseInt(aId);
+		var c_name_index = "answer_circle";
+		var type = mylib.get_request_params("type");
+		common.isNull(type) ? type = 0 : type = parseInt(type);
+		if(type == 1) {
+			mylib.user_id = "073108478526A@tv";
+			mylib.token = "DHSnXw9e7i_seEXt1ODiQ_M135392310";
+			mylib.app_version = "YYS.5.0.0.Y28.0.HNLT.0.0_Pre_Release";
+			mylib.device_mac = "cc-79-cf-01-5e-2e";
+			mylib.token = "ZgOOgo5MjkyOTIdLS5mZBTuqS7R8BXxLtKoNhwUFSwYFO3sOdgZ2h6oGDg4OtLQ7qiC0jkyOTI5MZgOOgg%3D%3D";
+		}
+		var classIdx = 0;
+		var topIdx = 0;
+		var idx = 0;
+
+		$(function() {
+			common.addExitUrl(exitStr, c_name_index);
+			focus_manage.area = parea;
+			focus_manage.idx = index;
+			mylib.bind_key(focus_manage);
+			btn.init();
+
+			/*动画库*/
+			/*if($.browser.msie && $.browser.version < 10) {
+				$('.jq22-explain').show();
+			}*/
+
+			var $animate = $('#animate');
+			var $btn = $('.tabCnt').find('li');
+			$btn.click(function() {
+				$(this).addClass('active').siblings().removeClass('active');
+				$animate.removeClass().addClass($(this).text() + ' animated infinite');
+				setTimeout(removeClass, 1000);
+			});
+
+			var $tabNavItem = $('.tabNav').find('a');
+			var $tabPane = $('.tabPane');
+			$tabNavItem.each(function(i) {
+				$(this).click(function() {
+					$(this).parent().addClass('active').siblings().removeClass('active');
+					$tabPane.eq(i).addClass('active').siblings().removeClass('active');
+					return false;
+				});
+			});
+		});
+
+		function removeClass() {
+			$('#animate').removeClass();
+		}
+		var btn = {
+			init: function() {
+				focus_manage.btn = function(key_code) {
+					btn.key_(key_code);
+				};
+				btn.isFocus();
+			},
+			key_: function(key_code) {
+				switch(key_code) {
+					case mylib.KEY_UP:
+						btn.lastFocus();
+						if(idx < 100) {
+							idx = 100;
+							topIdx = 7;
+						} else {
+							if(topIdx > 6) topIdx -= 7;
+						}
+						btn.setFocus();
+						break;
+					case mylib.KEY_DOWN:
+						btn.lastFocus();
+						if(idx < 100) {
+							
+						} else {
+							if(isId(topIdx + 7)) {
+								topIdx += 7;
+							} else {
+								idx = 0;
+							}
+						}
+						btn.setFocus();
+						break;
+					case mylib.KEY_RIGHT:
+						if(idx < 100) {
+							if(isId(classIdx, idx + 1)) {
+								btn.lastFocus();
+								idx++;
+								btn.setFocus();
+							}
+						} else {
+							btn.lastFocus();
+							if(isId(topIdx + 1)) topIdx++;
+							btn.setFocus();
+						}
+						break;
+					case mylib.KEY_LEFT:
+						if(idx < 100) {
+							btn.lastFocus();
+							if(idx > 0) idx--;
+							btn.setFocus();
+						} else {
+							btn.lastFocus();
+							if(topIdx > 0) topIdx--;
+							btn.setFocus();
+						}
+
+						break;
+					case mylib.KEY_SELECT:
+						if(idx < 100) {
+							$('#animate').removeClass().addClass($("#list_" + classIdx + "_" + idx).text() + ' animated infinite');
+							setTimeout(removeClass, 1000);
+						} else {
+							if(classIdx == topIdx) return;
+							$("#list_" + classIdx).removeClass('curActive');
+							classIdx = topIdx;
+							$('.tabPane').eq(classIdx).addClass('curActive').siblings().removeClass('curActive');
+							$('.tabPane').eq(classIdx).addClass('active').siblings().removeClass('active');
+						}
+						break;
+					case mylib.KEY_PAGEDOWN:
+						break;
+					case mylib.KEY_PAGEUP:
+						break;
+					case mylib.KEY_BACK:
+					case 27: //TODO  
+					case 8:
+						pageBack();
+						break;
+				}
+			},
+			setFocus: function() {
+				if(idx < 100) {
+					$("#list_" + classIdx + "_" + idx).addClass('active').siblings().removeClass('active');
+				} else {
+					$("#list_" + topIdx).addClass('active').siblings().removeClass('active');
+				}
+
+			},
+			lastFocus: function() {
+				if(idx < 100) {
+					$("#list_" + classIdx + "_" + idx).removeClass('active');
+				} else {
+					if(topIdx == classIdx) $("#list_" + topIdx).addClass('curActive').siblings().removeClass('curActive');
+					else $("#list_" + topIdx).removeClass('active');
+				}
+
+			},
+			isFocus: function() { //判断按钮状态
+				btn.setFocus();
+				//mylib.KEY_MOVE = true;
+			},
+			exit_url: function() {
+				var exit_ = window.location.href.split("?")[0] + "?area=" + focus_manage.area +
+					"&index=" + focus_manage.idx + "&activityId=" + aId;
+				return escape(exit_);
+			}
+		}
+
+		function isId(classIdx, idx) {
+			var tmp = "";
+			tmp = $("#list_" + classIdx + "_" + idx).html();
+			if(common.isNull(idx)) tmp = $("#list_" + classIdx).html();
+			if(common.isNull(tmp)) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		/*按确定*/
+		function keyEnter() {}
+
+		function jumpWeb(url_) {
+			window.location.href = url_;
+		}
+		//返回
+		function pageBack() {
+			common.goback(c_name_index);
+		}
+	</script>
+
+</html>

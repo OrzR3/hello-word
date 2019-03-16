@@ -1,0 +1,240 @@
+/*每日竞猜时间列表
+ * http://58.20.27.5/MemberInterface/GetActiveInfo?activityId=35&type=0&userId=*&usertoken=*&fromsource=5*/
+
+var timedata = {
+    "Message":null,
+    "Result":0,
+    "Count":0,
+    "Data":{
+        "children":[
+            {
+                "children":[
+
+                ],
+                "child":[
+
+                ],
+                "children2":[
+
+                ],
+                "items":[
+
+                ],
+                "dataitems":null,
+                "menuList":null,
+                "questionList":null,
+                "userCount":0,
+                "id":"38",
+                "groupId":"5ba4d02283784ca7927af6d4731499f9",
+                "title":"06月16日",
+                "showName":"世界杯竞猜_06月16日",
+                "type":"1",
+                "dataType":null,
+                "description":"",
+                "sort":"0",
+                "status":"0",
+                "payRatio":null,
+                "parentId":"35",
+                "sequences":"000027",
+                "createTime":"2018-05-29 17:24:07",
+                "isDelete":"0",
+                "extend1":"",
+                "extend2":"",
+                "extend3":"",
+                "extend4":"",
+                "extend5":"",
+                "images1":"",
+                "images2":"",
+                "images3":"",
+                "images4":"",
+                "usercount":"u1:0,u2:0,u3:0,u4:0,",
+                "period":"0",
+                "materialcount":"0",
+                "images5":"",
+                "images6":"",
+                "images7":"",
+                "images8":"",
+                "images9":"",
+                "images10":"",
+                "images11":"",
+                "images12":"",
+                "images13":"",
+                "onlinetime":null,
+                "offlinetime":null
+            },
+            {
+                "children":[
+
+                ],
+                "child":[
+                    "40",
+                    "41"
+                ],
+                "children2":[
+
+                ],
+                "items":[
+
+                ],
+                "dataitems":null,
+                "menuList":null,
+                "questionList":null,
+                "userCount":0,
+                "id":"37",
+                "groupId":"be13a483eb6545c29a23f0456f448d5b",
+                "title":"06月15日",
+                "showName":"世界杯竞猜_06月15日",
+                "type":"1",
+                "dataType":null,
+                "description":"",
+                "sort":"0",
+                "status":"0",
+                "payRatio":null,
+                "parentId":"35",
+                "sequences":"000026",
+                "createTime":"2018-05-29 17:23:47",
+                "isDelete":"0",
+                "extend1":"",
+                "extend2":"",
+                "extend3":"",
+                "extend4":"",
+                "extend5":"",
+                "images1":"",
+                "images2":"",
+                "images3":"",
+                "images4":"",
+                "usercount":"u1:0,u2:0,u3:0,u4:0,",
+                "period":"0",
+                "materialcount":"0",
+                "images5":"",
+                "images6":"",
+                "images7":"",
+                "images8":"",
+                "images9":"",
+                "images10":"",
+                "images11":"",
+                "images12":"",
+                "images13":"",
+                "onlinetime":null,
+                "offlinetime":null
+            },
+            {
+                "children":[
+
+                ],
+                "child":[
+                    "39"
+                ],
+                "children2":[
+
+                ],
+                "items":[
+
+                ],
+                "dataitems":null,
+                "menuList":null,
+                "questionList":null,
+                "userCount":0,
+                "id":"36",
+                "groupId":"95b12a8c05ae4a1997724c1ffcb18474",
+                "title":"06月14日",
+                "showName":"世界杯竞猜_06月14日",
+                "type":"1",
+                "dataType":null,
+                "description":"",
+                "sort":"0",
+                "status":"0",
+                "payRatio":null,
+                "parentId":"35",
+                "sequences":"000025",
+                "createTime":"2018-05-29 17:23:07",
+                "isDelete":"0",
+                "extend1":"",
+                "extend2":"",
+                "extend3":"",
+                "extend4":"",
+                "extend5":"",
+                "images1":"",
+                "images2":"",
+                "images3":"",
+                "images4":"",
+                "usercount":"u1:0,u2:0,u3:0,u4:0,",
+                "period":"0",
+                "materialcount":"0",
+                "images5":"",
+                "images6":"",
+                "images7":"",
+                "images8":"",
+                "images9":"",
+                "images10":"",
+                "images11":"",
+                "images12":"",
+                "images13":"",
+                "onlinetime":null,
+                "offlinetime":null
+            }
+        ],
+        "child":[
+            "36",
+            "38",
+            "37"
+        ],
+        "children2":[
+
+        ],
+        "items":[
+
+        ],
+        "dataitems":[
+
+        ],
+        "menuList":null,
+        "questionList":null,
+        "userCount":0,
+        "id":"35",
+        "groupId":"604e25c68c734314ac7dba991d77fd05",
+        "title":"世界杯竞猜",
+        "showName":"世界杯竞猜",
+        "type":"1",
+        "dataType":null,
+        "description":"",
+        "sort":"0",
+        "status":"0",
+        "payRatio":null,
+        "parentId":"0",
+        "sequences":"000024",
+        "createTime":"2018-05-23 18:33:55",
+        "isDelete":"0",
+        "extend1":"",
+        "extend2":"",
+        "extend3":"",
+        "extend4":"",
+        "extend5":"",
+        "images1":"",
+        "images2":"",
+        "images3":"",
+        "images4":"",
+        "usercount":"u1:1,u2:1,u3:1,u4:1,",
+        "period":"0",
+        "materialcount":"0",
+        "images5":"",
+        "images6":"",
+        "images7":"",
+        "images8":"",
+        "images9":"",
+        "images10":"",
+        "images11":"",
+        "images12":"",
+        "images13":"",
+        "onlinetime":null,
+        "offlinetime":null
+    },
+    "id":null,
+    "SmsId":null,
+    "Flag":null,
+    "Count2":0,
+    "LotteryCount":0,
+    "Allcount":0,
+    "total":0,
+    "time":"2018-06-01 17:23:12"
+}

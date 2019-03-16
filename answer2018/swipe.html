@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>空模板</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" type="text/css" href="js/swiper/swiper.min.css" />
+		<style>
+			body {
+				background-color: black;
+			}
+			
+			#bgDiv {
+				position: absolute;
+				width: 1280px;
+				height: 720px;
+				overflow: hidden;
+				background: url(images/index/bg.jpg) no-repeat;
+			}
+			
+			* {
+				margin: 0;
+				padding: 0;
+				font-family: "微软雅黑";
+			}
+			
+			.wrap {
+				margin: 0 auto;
+			}
+			
+			.tabs {
+				height: 32px;
+				background: #5AA9F3;
+				width: 100%;
+				padding-top: 8px;
+				text-align: center
+			}
+			
+			.tabs .part {
+				display: block;
+				float: left;
+				width: 33%;
+				color: #fff;
+				text-align: center;
+				height: 20px;
+			}
+			
+			.tabs .part:first-child {
+				border-right: 1px solid #ADDAFD;
+			}
+			
+			.tabs a {
+				width: 70px;
+				display: block;
+				color: #fff;
+				text-align: center;
+				margin: 0 auto;
+				font-size: 16px;
+				text-decoration: none;
+				padding-bottom: 2px;
+			}
+			
+			.tabs span.active a {
+				color: #fff;
+				border-bottom: 2px solid #fff;
+			}
+			
+			.swiper-container {
+				width: 100%;
+				border-top: 0;
+				height: 700px;
+				margin-top: 10px!important
+			}
+			
+			.swiper-slide {
+				width: 100%;
+				background: none;
+				color: #F1BE53;
+			}
+			
+			p {
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="bgDiv">
+			<div class="wrap">
+				<div class="tabs">
+					<span class="part">选项1</span>
+					<span class="part">选项2</span>
+					<span class="part">选项3</span>
+				</div>
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide swiper-slide-visible swiper-slide-active">
+							<div class="">
+								<p>内容1内容1</p>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="">
+								<p>内容2内容2</p>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="">
+								<p>内容3内容3</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/circleChart.min.js"></script>
+	<script type="text/javascript" src="js/webview.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/mylib.js"></script>
+	<script type="text/javascript" src="js/MSClass.js"></script>
+	<script type="text/javascript" src="js/sha1.js"></script>
+	<script type="text/javascript" src="js/swiper/idangerous.swiper.min.js"></script>
+	<script>
+		var focus_manage = {};
+		var parea = mylib.get_request_params("area");
+		var index = mylib.get_request_params("index");
+		var type = mylib.get_request_params("type"); //1:调试
+		var exitStr = mylib.get_request_params("exitStr");
+		var aId = mylib.get_request_params("activityId");
+		common.isNull(parea) ? parea = "btn" : parea = parea;
+		common.isNull(index) ? index = 2 : index = parseInt(index);
+		common.isNull(aId) ? aId = 35 : aId = parseInt(aId);
+		var c_name_index = "answer_circle";
+		var type = mylib.get_request_params("type");
+		common.isNull(type) ? type = 0 : type = parseInt(type);
+		var focus = mylib.get_request_params("focus");
+		common.isNull(focus) ? focus = "btn_0" : focus = focus;
+		var a = "btn";
+		var idx = 0;
+		var exit_name = "";
+		/*滑动插件方法*/
+		var tabsSwiper;
+		tabsSwiper = new Swiper('.swiper-container', {
+			speed: 500,
+			onSlideChangeStart: function() {
+				//$(".tabs .active").removeClass('active');
+				//$(".tabs span").eq(tabsSwiper.activeIndex).addClass('active');
+			}
+		});
+		$(function() {
+			common.addExitUrl(exitStr, c_name_index);
+			focus_manage.area = parea;
+			focus_manage.idx = index;
+			mylib.bind_key(focus_manage);
+			btn.init();
+			setFocus();
+
+			$(".tabs span").on('touchstart mousedown', function(e) {
+				tabsSwiper.swipeTo($(this).index());
+			});
+		});
+
+		var btn = {
+			init: function() {
+				focus_manage.btn = function(key_code) {
+					btn.key_(key_code);
+				};
+				btn.isFocus();
+			},
+			key_: function(key_code) {
+				switch(key_code) {
+					case mylib.KEY_UP:
+						break;
+					case mylib.KEY_DOWN:
+						break;
+					case mylib.KEY_RIGHT:
+						if(idx < 2) {
+							lostFocus();
+							idx++;
+							setFocus();
+						}
+						break;
+					case mylib.KEY_LEFT:
+						if(idx > 0) {
+							lostFocus();
+							idx--;
+							setFocus();
+						}
+						break;
+					case mylib.KEY_SELECT:
+						tabsSwiper.swipeTo(idx);
+						break;
+					case mylib.KEY_PAGEDOWN:
+						break;
+					case mylib.KEY_PAGEUP:
+						break;
+					case mylib.KEY_BACK:
+					case 27: //TODO  
+					case 8:
+						pageBack();
+						break;
+				}
+			},
+			setFocus: function() {},
+			lastFocus: function() {},
+			isFocus: function() { //判断按钮状态
+				btn.setFocus();
+				//mylib.KEY_MOVE = true;
+			},
+			exit_url: function() {
+				var exit_ = window.location.href.split("?")[0] + "?area=" + focus_manage.area +
+					"&index=" + focus_manage.idx + "&activityId=" + aId;
+				return escape(exit_);
+			}
+		}
+
+		function setFocus() {
+			$(".tabs>span").eq(idx).css({
+				"color": "#F1BE53"
+			})
+		}
+
+		function lostFocus() {
+			$(".tabs>span").eq(idx).css({
+				"color": "#fff"
+			})
+		}
+		/*按确定*/
+		function keyEnter() {}
+
+		function jumpWeb(url_) {
+			window.location.href = url_;
+		}
+		//返回
+		function pageBack() {
+			common.goback(c_name_index);
+		}
+	</script>
+
+</html>

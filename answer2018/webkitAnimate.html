@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>百分百圆形进度条</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" type="text/css" href="css/baseAnimate.css"/>
+		<style>
+			body {
+				background-color: black;
+			}
+			
+			#bgDiv {
+				position: absolute;
+				width: 1280px;
+				height: 720px;
+				/*overflow: hidden;*/
+				background: url(images/index/bg.jpg) no-repeat;
+			}
+			
+			#bgDiv>div {
+				margin-left: 10px;
+			}
+			
+			span {
+				width: 100px;
+				height: 100px;
+				background: #000;
+				display: inline-block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="bgDiv">
+			<div>
+				<h2>4个方向的淡入</h2>
+				<span class="a-fadein"></span>
+				<span class="a-fadeinT"></span>
+				<span class="a-fadeinR"></span>
+				<span class="a-fadeinB"></span>
+				<span class="a-fadeinL"></span>
+			</div>
+			<!-- 4个方向的淡出 -->
+			<div>
+				<h2>4个方向的淡出</h2>
+				<span class="a-fadeout"></span>
+				<span class="a-fadeoutT"></span>
+				<span class="a-fadeoutR"></span>
+				<span class="a-fadeoutB"></span>
+				<span class="a-fadeoutL"></span>
+			</div>
+			<!-- 多个方向弹入 -->
+			<div>
+				<h2>多个方向弹入</h2>
+				<span class="a-bounce"></span>
+				<span class="a-bouncein"></span>
+				<span class="a-bounceinT"></span>
+				<span class="a-bounceinR"></span>
+				<span class="a-bounceinB"></span>
+				<span class="a-bounceinL"></span>
+			</div>
+			<!-- 多个方向弹出 -->
+			<div>
+				<h2>多个方向弹出</h2>
+				<span class="a-bounceout"></span>
+				<span class="a-bounceoutT"></span>
+				<span class="a-bounceoutR"></span>
+				<span class="a-bounceoutB"></span>
+				<span class="a-bounceoutL"></span>
+			</div>
+			<!-- 多个方向转入 -->
+			<div>
+				<h2>多个方向转入</h2>
+				<span class="a-rotatein"></span>
+				<span class="a-rotateinLT"></span>
+				<span class="a-rotateinLB"></span>
+				<span class="a-rotateinRT"></span>
+				<span class="a-rotateinRB"></span>
+			</div>
+			<!-- 多个方向转出 -->
+			<div>
+				<h2>多个方向转出</h2>
+				<span class="a-rotateout"></span>
+				<span class="a-rotateoutLT"></span>
+				<span class="a-rotateoutLB"></span>
+				<span class="a-rotateoutRT"></span>
+				<span class="a-rotateoutRB"></span>
+			</div>
+			<!-- 多个方向翻入 -->
+			<div>
+				<h2>多个方向翻入</h2>
+				<span class="a-flip"></span>
+				<span class="a-flipinX"></span>
+				<span class="a-flipinY"></span>
+			</div>
+			<!-- 多个方向翻出 -->
+			<div>
+				<h2>多个方向翻出</h2>
+				<span class="a-flipoutX"></span>
+				<span class="a-flipoutY"></span>
+			</div>
+			<!-- flash -->
+			<div>
+				<h2>flash</h2>
+				<span class="a-flash"></span>
+				<span class="a-shake"></span>
+				<span class="a-swing"></span>
+				<span class="a-wobble"></span>
+				<span class="a-ring"></span>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/circleChart.min.js"></script>
+	<script type="text/javascript" src="js/webview.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/mylib.js"></script>
+	<script type="text/javascript" src="js/MSClass.js"></script>
+	<script type="text/javascript" src="js/sha1.js"></script>
+	<script>
+		var focus_manage = {};
+		var parea = mylib.get_request_params("area");
+		var index = mylib.get_request_params("index");
+		var type = mylib.get_request_params("type"); //1:调试
+		var exitStr = mylib.get_request_params("exitStr");
+		var aId = mylib.get_request_params("activityId");
+		common.isNull(parea) ? parea = "btn" : parea = parea;
+		common.isNull(index) ? index = 2 : index = parseInt(index);
+		common.isNull(aId) ? aId = 35 : aId = parseInt(aId);
+		var c_name_index = "answer_circle";
+		var type = mylib.get_request_params("type");
+		common.isNull(type) ? type = 0 : type = parseInt(type);
+		if(type == 1) {
+			mylib.user_id = "073108478526A@tv";
+			mylib.token = "DHSnXw9e7i_seEXt1ODiQ_M135392310";
+			mylib.app_version = "YYS.5.0.0.Y28.0.HNLT.0.0_Pre_Release";
+			mylib.device_mac = "cc-79-cf-01-5e-2e";
+			mylib.token = "ZgOOgo5MjkyOTIdLS5mZBTuqS7R8BXxLtKoNhwUFSwYFO3sOdgZ2h6oGDg4OtLQ7qiC0jkyOTI5MZgOOgg%3D%3D";
+		}
+		var i = 0;
+		var j = 0;
+		var count = 0;
+		/*var MM = 4;
+		var SS = 59;
+		var MS = 9;*/
+		var MM = 0;
+		var SS = 5;
+		var MS = 0;
+		//		var totle = (MM + 1) * 600;
+		var totle = (SS + 1) * 10;
+		var d = 180 * (MM + 1);
+		MM = "0" + MM;
+		$(function() {
+			common.addExitUrl(exitStr, c_name_index);
+			focus_manage.area = parea;
+			focus_manage.idx = index;
+			mylib.bind_key(focus_manage);
+			btn.init();
+			/*圆形进度条方法*/
+			circle();
+		});
+		/*百分百圆形进度条*/
+		function circle() {
+			$(".pie1").css({
+				"-webkit-transform": "rotate(0deg)",
+				"-ms-transform": "rotate(0deg)",
+				"-moz-transform": "rotate(0deg)",
+				"-o-transform": "rotate(0deg)"
+			});
+			$(".pie2").css({
+				"-webkit-transform": "rotate(0deg)",
+				"-ms-transform": "rotate(0deg)",
+				"-moz-transform": "rotate(0deg)",
+				"-o-transform": "rotate(0deg)"
+			});
+			count = 0;
+			MM = 0;
+			SS = 5;
+			MS = 0;
+			totle = (SS + 1) * 10;
+			d = 180 * (MM + 1);
+			MM = "0" + MM;
+			s = setInterval("showTime()", 100);
+			/*imp 先注释掉这个倒计时显示的方法*/
+			/*s = setInterval("showTime()", 100);
+			t1 = setInterval("start1()", 100);*/
+			/*上面是用定时器写的圆形进度条条，比较卡顿，下面改用web-kit动画*/
+			circleByWebkit();
+		}
+
+		function circleByWebkit() {
+			$(".pie1").addClass("right_circle");
+			$(".pie1").on("animationend webkitAnimationEnd", function() {
+				$(".pie1").css({
+					"-webkit-transform": "rotate(180deg)",
+					"-ms-transform": "rotate(180deg)",
+					"-moz-transform": "rotate(180deg)",
+					"-o-transform": "rotate(180deg)"
+				});
+				$(".pie1").removeClass("right_circle");
+				$(".pie2").addClass("left_circle");
+			})
+
+			$(".pie2").on("animationend webkitAnimationEnd", function() {
+				$(".pie2").css({
+					"-webkit-transform": "rotate(180deg)",
+					"-ms-transform": "rotate(180deg)",
+					"-moz-transform": "rotate(180deg)",
+					"-o-transform": "rotate(180deg)"
+				});
+				$(".pie2").removeClass("left_circle");
+			})
+		}
+
+		function showTime() {
+			common.log("totle : ", totle);
+			totle = totle - 1;
+			if(totle == 0) {
+				clearInterval(s);
+				//				clearInterval(t1);
+				//				clearInterval(t2);
+				/*$(".pie2").css("-o-transform", "rotate(" + d + "deg)");
+				$(".pie2").css("-moz-transform", "rotate(" + d + "deg)");
+				$(".pie2").css("-webkit-transform", "rotate(" + d + "deg)");*/
+			} else {
+				if(totle > 0 && MS > 0) {
+					MS = MS - 1;
+					if(MS < 10) {
+						MS = "0" + MS
+					};
+				};
+				if(MS == 0 && SS > 0) {
+					MS = 10;
+					SS = SS - 1;
+					if(SS < 10) {
+						SS = "0" + SS
+					};
+				};
+				if(SS == 0 && MM > 0) {
+					SS = 60;
+					MM = MM - 1;
+					if(MM < 10) {
+						MM = "0" + MM
+					};
+				};
+			};
+			$(".time span").html(MM + ":" + SS + ":" + MS);
+		};
+
+		function start1() {
+			i = i + 0.6;
+			count = count + 1;
+			if(count == 300) {
+				count = 0;
+				clearInterval(t1);
+				t2 = setInterval("start2()", 100);
+			};
+			$(".pie1").css("-o-transform", "rotate(" + i + "deg)");
+			$(".pie1").css("-moz-transform", "rotate(" + i + "deg)");
+			$(".pie1").css("-webkit-transform", "rotate(" + i + "deg)");
+		};
+
+		function start2() {
+			j = j + 0.6;
+			count = count + 1;
+			if(count == 300) {
+				count = 0;
+				clearInterval(t2);
+				t1 = setInterval("start1()", 100);
+			};
+			$(".pie2").css("-o-transform", "rotate(" + j + "deg)");
+			$(".pie2").css("-moz-transform", "rotate(" + j + "deg)");
+			$(".pie2").css("-webkit-transform", "rotate(" + j + "deg)");
+		};
+		var btn = {
+			init: function() {
+				focus_manage.btn = function(key_code) {
+					btn.key_(key_code);
+				};
+				btn.isFocus();
+			},
+			key_: function(key_code) {
+				switch(key_code) {
+					case mylib.KEY_UP:
+						break;
+					case mylib.KEY_DOWN:
+						break;
+					case mylib.KEY_RIGHT:
+						break;
+					case mylib.KEY_LEFT:
+						break;
+					case mylib.KEY_SELECT:
+						circle();
+						break;
+					case mylib.KEY_PAGEDOWN:
+						break;
+					case mylib.KEY_PAGEUP:
+						break;
+					case mylib.KEY_BACK:
+					case 27: //TODO  
+					case 8:
+						pageBack();
+						break;
+				}
+			},
+			setFocus: function() {},
+			lastFocus: function() {},
+			isFocus: function() { //判断按钮状态
+				btn.setFocus();
+				//mylib.KEY_MOVE = true;
+			},
+			exit_url: function() {
+				var exit_ = window.location.href.split("?")[0] + "?area=" + focus_manage.area +
+					"&index=" + focus_manage.idx + "&activityId=" + aId;
+				return escape(exit_);
+			}
+		}
+		/*按确定*/
+		function keyEnter() {}
+
+		function jumpWeb(url_) {
+			window.location.href = url_;
+		}
+		//返回
+		function pageBack() {
+			common.goback(c_name_index);
+		}
+	</script>
+
+</html>

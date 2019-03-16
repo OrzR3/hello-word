@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>css3创建圆形进度条</title>
+    <link rel="stylesheet" href="css/common.css" />
+    <style>
+        body {
+            background-color: black;
+        }
+
+        #bgDiv {
+            position: absolute;
+            width: 1280px;
+            height: 720px;
+            overflow: hidden;
+            background: url(images/index/bg.jpg) no-repeat;
+        }
+		/*圆形时间进度条*/
+        .circleProgress_wrapper {
+            width: 200px;
+            height: 200px;
+            margin: 50px auto;
+            position: relative;
+        }
+
+        .wrapper {
+            width: 100px;
+            /*如果原本高度是200，这边需要增加2*2个像素*/
+            height: 204px;
+            position: absolute;
+            top: 0;
+            overflow: hidden;
+        }
+
+        .right {
+            right: 0;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .circleProgress {
+        	/*如果原本高度是160，这边宽高都需要增加2个像素*/
+            width: 162px;
+            height: 162px;
+            border: 20px solid transparent;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            -webkit-transform: rotate(45deg);
+        }
+
+        .rightcircle {
+            border-top: 20px solid #ff754a;
+            border-right: 20px solid #ff754a;
+            right: 0;
+            /*-webkit-animation: circleProgressLoad_right 10s linear infinite;*/
+            -webkit-animation: circleProgressLoad_right 10s linear;
+        }
+
+        .leftcircle {
+            border-bottom: 20px solid #ff754a;
+            border-left: 20px solid #ff754a;
+            left: 0;
+            /*-webkit-animation: circleProgressLoad_left 10s linear infinite;*/
+           -webkit-animation: circleProgressLoad_left 10s linear;
+        }
+
+        @-webkit-keyframes circleProgressLoad_right {
+            0% {
+                -webkit-transform: rotate(45deg);
+            }
+            50%,
+            100% {
+                -webkit-transform: rotate(225deg);
+            }
+        }
+
+        @-webkit-keyframes circleProgressLoad_left {
+            0%,
+            50% {
+                -webkit-transform: rotate(45deg);
+            }
+            100% {
+                -webkit-transform: rotate(225deg);
+            }
+        }
+		.count_text {
+			width: 160px;
+			height: 160px;
+			border: 20px solid transparent;
+			border-radius: 50%;
+			line-height: 160px;
+			text-align: center;
+			font-size: 70px;
+			font-weight: bolder;
+			position: absolute;
+			top: 0;
+		}
+		/*圆形时间进度条*/
+    </style>
+</head>
+
+<body>
+    <div id="bgDiv">
+        <!--圆形时间进度条-->
+        <div class="circleProgress_wrapper">
+            <div class="wrapper right">
+                <div class="circleProgress"></div>
+            </div>
+            <div class="wrapper left">
+                <div class="circleProgress"></div>
+            </div>
+            <div class="count_text"></div>
+        </div>
+         
+        <!--圆形时间进度条-->
+    </div>
+</body>
+<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="js/webview.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/mylib.js"></script>
+<script type="text/javascript" src="js/MSClass.js"></script>
+<script type="text/javascript" src="js/sha1.js"></script>
+<script>
+    var focus_manage = {};
+    var parea = mylib.get_request_params("area");
+    var index = mylib.get_request_params("index");
+    var type = mylib.get_request_params("type"); //1:调试
+    var exitStr = mylib.get_request_params("exitStr");
+    var aId = mylib.get_request_params("activityId");
+    common.isNull(parea) ? parea = "btn" : parea = parea;
+    common.isNull(index) ? index = 2 : index = parseInt(index);
+    common.isNull(aId) ? aId = 35 : aId = parseInt(aId);
+    var c_name_index = "answer_index";
+    var type = mylib.get_request_params("type");
+    common.isNull(type) ? type = 0 : type = parseInt(type);
+    if (type == 1) {
+        mylib.user_id = "073108478526A@tv";
+        mylib.token = "DHSnXw9e7i_seEXt1ODiQ_M135392310";
+        mylib.app_version = "YYS.5.0.0.Y28.0.HNLT.0.0_Pre_Release";
+        mylib.device_mac = "cc-79-cf-01-5e-2e";
+        mylib.token = "ZgOOgo5MjkyOTIdLS5mZBTuqS7R8BXxLtKoNhwUFSwYFO3sOdgZ2h6oGDg4OtLQ7qiC0jkyOTI5MZgOOgg%3D%3D";
+    }
+	var timer = -1;
+	var count_num = 10;
+    $(function () {
+        common.addExitUrl(exitStr, c_name_index);
+        focus_manage.area = parea;
+        focus_manage.idx = index;
+        mylib.bind_key(focus_manage);
+        btn.init();
+		showCount();
+		
+		$('.right>.circleProgress').addClass("rightcircle");
+		$('.right>.circleProgress').on("animationend webkitAnimationEnd",function(){
+			$('.right>.circleProgress').removeClass("rightcircle");
+			$(".wrapper").hide();
+		})
+		$('.left>.circleProgress').addClass("leftcircle");
+		$('.left>.circleProgress').on("animationend webkitAnimationEnd",function(){
+			$('.left>.circleProgress').removeClass("leftcircle");
+			$(".wrapper").hide();
+		})
+		
+		$('.circleProgress').on("animationend webkitAnimationEnd",function(){
+			$(".wrapper").hide();
+		})
+    });
+	/* 圆形时间进度条-倒计时 */
+	function showCount(){
+		count_num = 10;
+		$(".circleProgress_wrapper").show();
+		clearTimeout(timer);
+		countNum();	
+	}
+    function countNum() {
+		if(count_num>0){
+			$(".count_text").html(count_num);
+			count_num--;
+			timer = setTimeout(function(){
+				countNum();
+			},1000);
+		}else{
+			/*count_num= 10;
+			timer = setTimeout(function(){
+				countNum();
+			},1000);*/
+			clearTimeout(timer);
+			/*倒计时结束时，移动webkit的css3样式*/
+			$('.left>.circleProgress').removeClass("leftcircle");
+			$('.right>.circleProgress').removeClass("rightcircle");
+			$(".wrapper").hide();
+			$(".count_text").html("点击确定继续");
+		}
+    }
+	/* 圆形时间进度条-倒计时 */
+    var btn = {
+        init: function () {
+            focus_manage.btn = function (key_code) {
+                btn.key_(key_code);
+            };
+            btn.isFocus();
+        },
+        key_: function (key_code) {
+            switch (key_code) {
+                case mylib.KEY_UP:
+                    break;
+                case mylib.KEY_DOWN:
+                    break;
+                case mylib.KEY_RIGHT:
+                    break;
+                case mylib.KEY_LEFT:
+                    break;
+                case mylib.KEY_SELECT:
+                	clearTimeout(timer);
+                	count_num = 10;
+					countNum();	
+                
+					$(".wrapper").show();
+					$('.right>.circleProgress').addClass("rightcircle");
+					$('.right>.circleProgress').on("animationend webkitAnimationEnd",function(){
+						$('.right>.circleProgress').removeClass("rightcircle");
+						$(".wrapper").hide();
+					})
+					$('.left>.circleProgress').addClass("leftcircle");
+					$('.left>.circleProgress').on("animationend webkitAnimationEnd",function(){
+						$('.left>.circleProgress').removeClass("leftcircle");
+						$(".wrapper").hide();
+					})
+					
+					$('.circleProgress').on("animationend webkitAnimationEnd",function(){
+						$(".wrapper").hide();
+					})
+					
+                    break;
+                case mylib.KEY_PAGEDOWN:
+                    break;
+                case mylib.KEY_PAGEUP:
+                    break;
+                case mylib.KEY_BACK:
+                case 27: //TODO  
+                case 8:
+                    pageBack();
+                    break;
+            }
+        },
+        setFocus: function () {
+        },
+        lastFocus: function () {
+        },
+        isFocus: function () { //判断按钮状态
+            btn.setFocus();
+            //mylib.KEY_MOVE = true;
+        },
+        exit_url: function () {
+            var exit_ = window.location.href.split("?")[0] + "?area=" + focus_manage.area +
+                "&index=" + focus_manage.idx + "&activityId=" + aId;
+            return escape(exit_);
+        }
+    }
+    /*按确定*/
+    function keyEnter() {
+        showCount();
+    }
+
+    function jumpWeb(url_) {
+        window.location.href = url_;
+    }
+    //返回
+    function pageBack() {
+        common.goback(c_name_index);
+    }
+</script>
+
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>坦克大战</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			body {
+				background-color: black;
+			}
+			
+			#bgDiv {
+				position: absolute;
+				width: 1280px;
+				height: 720px;
+				overflow: hidden;
+				background: url(images/index/bg.jpg) no-repeat;
+			}
+			
+			.pie {
+				width: 200px;
+				height: 200px;
+				/*这个表示进度条的颜色*/
+				background-color: #0252db;
+				border-radius: 100px;
+				position: absolute;
+			}
+			
+			.pie1 {
+				/*rect (top, right, bottom, left)*/
+				clip: rect(0px, 200px, 200px, 100px);
+				-o-transform: rotate(0deg);
+				-moz-transform: rotate(0deg);
+				-webkit-transform: rotate(0deg);
+				/*background: -moz-radial-gradient(20% 50% 0deg, #333, #0000ff);
+				background: -webkit-gradient(radial, 100 100, 0, 100 100, 110, from(#000), to(#0000ff));*/
+			}
+			
+			.pie2 {
+				clip: rect(0px, 100px, 200px, 0px);
+				-o-transform: rotate(0deg);
+				-moz-transform: rotate(0deg);
+				-webkit-transform: rotate(0deg);
+				/*	background: -moz-radial-gradient(80% 50% 0deg, #333, #0000ff);
+				background: -webkit-gradient(radial, 100 100, 0, 100 100, 110, from(#000), to(#0000ff));*/
+			}
+			
+			.hold {
+				width: 200px;
+				height: 200px;
+				position: absolute;
+				z-index: 1;
+			}
+			
+			.hold1 {
+				clip: rect(0px, 200px, 200px, 100px);
+			}
+			
+			.hold2 {
+				clip: rect(0px, 100px, 200px, 0px);
+			}
+			
+			.bg {
+				width: 200px;
+				height: 200px;
+				/*这个background-color表示底色*/
+				background-color: #f15b6c;
+				border-radius: 100px;
+				position: absolute;
+				box-shadow: 0px 0px 8px #333;
+				/*background: -moz-radial-gradient(0% 50% 0deg, #900, #ff0000);
+				background: -webkit-gradient(radial, 100 100, 0, 100 100, 110, from(#900), to(#ff0000));*/
+			}
+			
+			.time {
+				width: 160px;
+				height: 160px;
+				margin: 20px 0 0 20px;
+				background-color: #fff;
+				border-radius: 100px;
+				position: absolute;
+				z-index: 1;
+				box-shadow: 0px 0px 8px #333 inset;
+				text-align: center;
+				line-height: 160px;
+				font-family: "Book Antiqua", Palatino, serif;
+				font-size: 35px;
+				font-weight: bold;
+				text-shadow: 1px 1px 3px #333;
+			}
+			
+			.time em {
+				background: #fff;
+				position: absolute;
+				top: 62px;
+				left: 12px;
+				height: 18px;
+				width: 140px;
+				opacity: 0.4;
+			}
+			
+			.circle {
+				position: relative;
+				margin: 260px auto;
+				width: 200px;
+				height: 200px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="bgDiv">
+			<div style="position: absolute; top: 30%; left: 30%;">
+				<canvas id="canvasOne" width="650" height="384" top=50px; left=50px;>Your browser does not support the HTML 5 Canvas. </canvas>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/circleChart.min.js"></script>
+	<script type="text/javascript" src="js/webview.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/mylib.js"></script>
+	<script type="text/javascript" src="js/MSClass.js"></script>
+	<script type="text/javascript" src="js/sha1.js"></script>
+	<script src="js/modernizr-1.6.min.js"></script>
+	<script src="js/main.js"></script>
+	<script>
+		var focus_manage = {};
+		var parea = mylib.get_request_params("area");
+		var index = mylib.get_request_params("index");
+		var type = mylib.get_request_params("type"); //1:调试
+		var exitStr = mylib.get_request_params("exitStr");
+		var aId = mylib.get_request_params("activityId");
+		common.isNull(parea) ? parea = "btn" : parea = parea;
+		common.isNull(index) ? index = 2 : index = parseInt(index);
+		common.isNull(aId) ? aId = 35 : aId = parseInt(aId);
+		var c_name_index = "answer_circle";
+		var type = mylib.get_request_params("type");
+		common.isNull(type) ? type = 0 : type = parseInt(type);
+		if(type == 1) {
+			mylib.user_id = "073108478526A@tv";
+			mylib.token = "DHSnXw9e7i_seEXt1ODiQ_M135392310";
+			mylib.app_version = "YYS.5.0.0.Y28.0.HNLT.0.0_Pre_Release";
+			mylib.device_mac = "cc-79-cf-01-5e-2e";
+			mylib.token = "ZgOOgo5MjkyOTIdLS5mZBTuqS7R8BXxLtKoNhwUFSwYFO3sOdgZ2h6oGDg4OtLQ7qiC0jkyOTI5MZgOOgg%3D%3D";
+		}
+		var i = 0;
+		var j = 0;
+		var count = 0;
+		var MM = 4;
+		var SS = 59;
+		var MS = 9;
+		var totle = (MM + 1) * 600;
+		var d = 180 * (MM + 1);
+		MM = "0" + MM;
+		$(function() {
+			common.addExitUrl(exitStr, c_name_index);
+			focus_manage.area = parea;
+			focus_manage.idx = index;
+			mylib.bind_key(focus_manage);
+			btn.init();
+			/*圆形进度条方法*/
+			//			circle();
+		});
+		/*main*/
+
+		/*main*/
+		var btn = {
+			init: function() {
+				focus_manage.btn = function(key_code) {
+					btn.key_(key_code);
+				};
+				btn.isFocus();
+			},
+			key_: function(key_code) {
+				tankmove.x = tankmove.nextx;
+				tankmove.y = tankmove.nexty;
+
+				switch(key_code) {
+					case mylib.KEY_UP:
+						tankmove.tankAngle = 0;
+						tankmove.nexty -= tankmove.tankspeed;
+						tankmove.tankshape = tankmove.tanknextshape;
+						if(scene[Math.floor((tankmove.nexty - 12) / 32)][Math.floor((tankmove.nextx - 12) / 32)] != 0 || scene[Math.floor((tankmove.nexty - 12) / 32)][Math.ceil((tankmove.nextx - 20) / 32)] != 0) {
+							tankmove.nextx = tankmove.x;
+							tankmove.nexty = tankmove.y;
+							return;
+						}
+						tankmove.tanknextshape += 1;
+						if(tankmove.tanknextshape > 8) {
+							tankmove.tanknextshape = 1;
+						}
+						return;
+						break;
+					case mylib.KEY_DOWN:
+						tankmove.tankAngle = 180;
+						tankmove.nexty += tankmove.tankspeed;
+						tankmove.tankshape = tankmove.tanknextshape;
+						if(scene[Math.ceil((tankmove.nexty - 20) / 32)][Math.ceil((tankmove.nextx - 20) / 32)] != 0 || scene[Math.ceil((tankmove.nexty - 20) / 32)][Math.floor((tankmove.nextx - 12) / 32)] != 0) {
+							tankmove.nextx = tankmove.x;
+							tankmove.nexty = tankmove.y;
+							return;
+						}
+						tankmove.tanknextshape += 1;
+						if(tankmove.tanknextshape > 8) {
+							tankmove.tanknextshape = 1;
+						}
+						return;
+						break;
+					case mylib.KEY_RIGHT:
+						tankmove.tankAngle = 90;
+						tankmove.nextx += tankmove.tankspeed;
+						tankmove.tankshape = tankmove.tanknextshape;
+						if(scene[Math.ceil((tankmove.nexty - 20) / 32)][Math.ceil((tankmove.nextx - 20) / 32)] != 0 || scene[Math.floor((tankmove.nexty - 12) / 32)][Math.ceil((tankmove.nextx - 20) / 32)] != 0) {
+							tankmove.nextx = tankmove.x;
+							tankmove.nexty = tankmove.y;
+							return;
+						}
+						tankmove.tanknextshape += 1;
+						if(tankmove.tanknextshape > 8) {
+							tankmove.tanknextshape = 1;
+						}
+						break;
+					case mylib.KEY_LEFT:
+						//playermove.play();
+						//playermove.stop();
+						tankmove.tankAngle = 270;
+						tankmove.nextx -= tankmove.tankspeed;
+						tankmove.tankshape = tankmove.tanknextshape;
+						if(scene[Math.floor((tankmove.nexty - 12) / 32)][Math.floor((tankmove.nextx - 12) / 32)] != 0 || scene[Math.ceil((tankmove.nexty - 20) / 32)][Math.floor((tankmove.nextx - 12) / 32)] != 0) {
+							tankmove.nextx = tankmove.x;
+							tankmove.nexty = tankmove.y;
+							return;
+						}
+						tankmove.tanknextshape += 1;
+						if(tankmove.tanknextshape > 8) {
+							tankmove.tanknextshape = 1;
+						}
+						return;
+						break;
+					case mylib.KEY_SELECT:
+						/*if(gameover) {
+							location.reload();
+						}*/
+						if(shell.shellflage) {
+							return;
+						}
+						if(tankmove.nextx < 0) {
+							return;
+						} else {
+							var shootSound = document.createElement("audio");
+							document.body.appendChild(shootSound);
+							shootSound.setAttribute("src", "shoot1.mp3");
+							shootSound.volume = .5;
+							shootSound.play();
+							shell.shellflage = true;
+							shell.nextx = tankmove.nextx;
+							shell.nexty = tankmove.nexty;
+							shell.shellAngle = tankmove.tankAngle;
+							if(shellInterval) {
+								clearInterval(shellInterval);
+								shellInterval = null;
+							}
+							shellInterval = setInterval(drawshell, 33);
+						}
+						break;
+					case mylib.KEY_PAGEDOWN:
+						break;
+					case mylib.KEY_PAGEUP:
+						break;
+					case mylib.KEY_BACK:
+					case 27: //TODO  
+					case 8:
+						pageBack();
+						break;
+				}
+			},
+			setFocus: function() {},
+			lastFocus: function() {},
+			isFocus: function() { //判断按钮状态
+				btn.setFocus();
+				//mylib.KEY_MOVE = true;
+			},
+			exit_url: function() {
+				var exit_ = window.location.href.split("?")[0] + "?area=" + focus_manage.area +
+					"&index=" + focus_manage.idx + "&activityId=" + aId;
+				return escape(exit_);
+			}
+		}
+		/*按确定*/
+		function keyEnter() {
+			showCount();
+		}
+
+		function jumpWeb(url_) {
+			window.location.href = url_;
+		}
+		//返回
+		function pageBack() {
+			common.goback(c_name_index);
+		}
+	</script>
+
+</html>

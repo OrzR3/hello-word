@@ -1,0 +1,15 @@
+if(list[temp_style].curPosIdx == temp_posidx && leftVal != list[temp_style].topVal) {
+	/*slide*/
+	$(temp_div).animate({"left":(leftVal + list[temp_style].movesize) + "px"});
+} else {
+	if(list[temp_style].curPosIdx > 0) list[temp_style].curPosIdx--;
+}
+
+var list = {
+2:{
+	topVal: 60,
+	movesize: 293,
+	curPosIdx: 0,
+	shownum: 4,
+},
+3:{

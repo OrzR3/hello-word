@@ -1,0 +1,71 @@
+动画(animation)的参数详解
+
+animation
+
+所有动画属性的简写属性，除了 animation-play-state 属性。
+
+animation-name
+
+规定 @keyframes 动画的名称。就是@keyframes后面跟着的动画名称，本demo本文中名为dot，意思为“点”。
+
+animation-duration
+
+规定动画完成一个周期所花费的秒或毫秒。默认是 0。
+
+animation-timing-function
+
+规定动画的速度曲线。默认是 "ease"。
+
+常见的动画速度参数：
+
+linear：线性过渡。等同于贝塞尔曲线(0.0, 0.0, 1.0, 1.0)
+
+ease：平滑过渡。等同于贝塞尔曲线(0.25, 0.1, 0.25, 1.0)
+
+ease-in：由慢到快。等同于贝塞尔曲线(0.42, 0, 1.0, 1.0)
+
+ease-out：由快到慢。等同于贝塞尔曲线(0, 0, 0.58, 1.0)
+
+ease-in-out：由慢到快再到慢。等同于贝塞尔曲线(0.42, 0, 0.58, 1.0)
+
+step-start：等同于 steps(1, start)
+
+step-end：等同于 steps(1, end)
+
+steps(<integer>[, [ start | end ] ]?)：接受两个参数的步进函数。第一个参数必须为正整数，指定函数的步数。第二个参数取值可以是start或end，指定每一步的值发生变化的时间点。第二个参数是可选的，默认值为end。
+
+cubic-bezier(<number>, <number>, <number>, <number>)：特定的贝塞尔曲线类型，4个数值需在[0, 1]区间内
+
+animation-delay
+
+规定动画何时开始。默认是 0。也即是指动画延时执行时间。
+
+animation-iteration-count
+
+规定动画被播放的次数。默认是 1。当然，我们可以设置2次，3次，依次递推。还有个无线循环关键字infinite,也即是反复循环播放动画。
+
+animation-direction
+
+规定动画是否在下一周期逆向地播放。默认是 "normal"。当然还有下列值：
+
+reverse：反方向运行
+
+alternate：动画先正常运行再反方向运行，并持续交替运行
+
+alternate-reverse：动画先反运行再正方向运行，并持续交替运行
+
+animation-fill-mode
+
+规定对象动画时间之外的状态。
+
+none：默认值。不设置对象动画之外的状态
+
+forwards：设置对象状态为动画结束时的状态
+
+backwards：设置对象状态为动画开始时的状态
+
+both：设置对象状态为动画结束或开始的状态,动画开始之前是"from"或"0%"关键帧；动画完成之后是"to"或"100%"关键帧状态。
+
+animation-play-state
+
+规定动画是否正在运行或暂停。默认是 "running"。还有个值paused：暂停。

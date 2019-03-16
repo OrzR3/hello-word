@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>空模板</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			body {
+				background-color: black;
+			}
+			
+			#bgDiv {
+				position: absolute;
+				width: 1280px;
+				height: 720px;
+				overflow: hidden;
+				background: url(images/index/bg.jpg) no-repeat;
+			}
+			
+			div {
+				position: absolute;
+			}
+			
+			.cont {
+				margin: 200px auto;
+				width: 400px;
+				background: #4a4d92;
+				height: 100px;
+				position: relative;
+				overflow: hidden;
+			}
+			
+			.twill {
+				width: 20px;
+				height: 2000px;
+				background: #f1be53;
+				position: absolute;
+				left: 0px;
+				top: -500px;
+				transform: rotateZ(30deg);
+				transform-origin: top left;
+				-webkit-transform: rotateZ(30deg);
+				-webkit-transform-origin: top left;
+				box-shadow: 40px 0px 1px 1px #f1be53, 80px 0px 1px 1px #f1be53, 120px 0px 1px 1px #f1be53, 160px 0px 1px 1px #f1be53, 200px 0px 1px 1px #f1be53, 240px 0px 1px 1px #f1be53, 280px 0px 1px 1px #f1be53, 320px 0px 1px 1px #f1be53, 360px 0px 1px 1px #f1be53, 400px 0px 1px 1px #f1be53, 440px 0px 1px 1px #f1be53, 480px 0px 1px 1px #f1be53, 520px 0px 1px 1px #f1be53, 560px 0px 1px 1px #f1be53, 600px 0px 1px 1px #f1be53, 640px 0px 1px 1px #f1be53;
+				animation: move 1s linear infinite;
+				-webkit-animation: move 1s linear infinite;
+			}
+			
+			@-webkit-keyframes move {
+				0% {
+					left: 0px;
+				}
+				100% {
+					left: 45px;
+				}
+			}
+			
+			@keyframes move {
+				0% {
+					left: 0px;
+				}
+				100% {
+					left: 45px;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="bgDiv">
+			<div class="cont">
+				<div class="twill"></div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/circleChart.min.js"></script>
+	<script type="text/javascript" src="js/webview.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/mylib.js"></script>
+	<script type="text/javascript" src="js/MSClass.js"></script>
+	<script type="text/javascript" src="js/sha1.js"></script>
+	<script>
+		var focus_manage = {};
+		var parea = mylib.get_request_params("area");
+		var index = mylib.get_request_params("index");
+		var type = mylib.get_request_params("type"); //1:调试
+		var exitStr = mylib.get_request_params("exitStr");
+		var aId = mylib.get_request_params("activityId");
+		common.isNull(parea) ? parea = "btn" : parea = parea;
+		common.isNull(index) ? index = 2 : index = parseInt(index);
+		common.isNull(aId) ? aId = 35 : aId = parseInt(aId);
+		var c_name_index = "answer_circle";
+		var type = mylib.get_request_params("type");
+		common.isNull(type) ? type = 0 : type = parseInt(type);
+		$(function() {
+			//			common.addExitUrl(exitStr, c_name_index);
+			focus_manage.area = parea;
+			focus_manage.idx = index;
+			mylib.bind_key(focus_manage);
+			btn.init();
+		});
+
+		var btn = {
+			init: function() {
+				focus_manage.btn = function(key_code) {
+					btn.key_(key_code);
+				};
+				btn.isFocus();
+			},
+			key_: function(key_code) {
+				switch(key_code) {
+					case mylib.KEY_UP:
+						break;
+					case mylib.KEY_DOWN:
+						break;
+					case mylib.KEY_RIGHT:
+						break;
+					case mylib.KEY_LEFT:
+						break;
+					case mylib.KEY_SELECT:
+						break;
+					case mylib.KEY_PAGEDOWN:
+						break;
+					case mylib.KEY_PAGEUP:
+						break;
+					case mylib.KEY_BACK:
+					case 27: //TODO  
+					case 8:
+						pageBack();
+						break;
+				}
+			},
+			setFocus: function() {},
+			lastFocus: function() {},
+			isFocus: function() { //判断按钮状态
+				btn.setFocus();
+				//mylib.KEY_MOVE = true;
+			},
+			exit_url: function() {
+				var exit_ = window.location.href.split("?")[0] + "?area=" + focus_manage.area +
+					"&index=" + focus_manage.idx + "&activityId=" + aId;
+				return escape(exit_);
+			}
+		}
+		/*按确定*/
+		function keyEnter() {}
+
+		function jumpWeb(url_) {
+			window.location.href = url_;
+		}
+		//返回
+		function pageBack() {
+			common.goback(c_name_index);
+		}
+	</script>
+
+</html>
